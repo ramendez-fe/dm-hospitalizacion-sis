@@ -46,6 +46,6 @@ def csv_a_parquet(raw_dir: Path = RAW, out_dir: Path = INTERIM, memoria: str = "
         destino = (out_dir / f"{tabla}.parquet").as_posix()
         print(f"{tabla}: {len(archivos)} archivo(s) -> {destino}")
         con.execute(
-            f"COPY (SELECT * FROM read_csv_auto([{lista}], union_by_name=true)) "
+            f"COPY (SELECT * FROM read_csv_auto([{lista}], union_by_name=true, ignore_errors=true)) "
             f"TO '{destino}' (FORMAT PARQUET, COMPRESSION ZSTD)"
         )
