@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dm-hosp"
+version = "0.1.0"
+description = "Prediccion de hospitalizacion a 12 meses en pacientes con Diabetes Mellitus (SIS)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "duckdb",
+    "openpyxl",
+    "pyyaml",
+    "scikit-learn",
+    "lightgbm",
+    "xgboost",
+    "catboost",
+    "shap",
+    "optuna",
+    "joblib",
+    "matplotlib",
+    "seaborn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "jupyterlab",
+    "ipykernel",
+    "pytest",
+    "ruff",
+    "nbstripout",
+    "pre-commit",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

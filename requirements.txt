@@ -1,0 +1,22 @@
+# Alternativa rapida a pyproject.toml (usa:  pip install -r requirements.txt  y luego  pip install -e . --no-deps)
+numpy
+pandas
+pyarrow
+duckdb
+openpyxl
+pyyaml
+scikit-learn
+lightgbm
+xgboost
+catboost
+shap
+optuna
+joblib
+matplotlib
+seaborn
+jupyterlab
+ipykernel
+pytest
+ruff
+nbstripout
+pre-commit

@@ -1,0 +1,61 @@
+# Parametros del proyecto: UN solo lugar para cambiar definiciones.
+proyecto:
+  nombre: dm-hospitalizacion-sis
+  semilla: 42
+
+datos:
+  fecha_corte_fuente: 20260810
+  ultimo_mes_datos: 202512        # los consumos llegan hasta dic-2025
+  muestra_pacientes_pct: 10       # % de PACIENTES para desarrollo (100 = todos)
+  memoria_duckdb: 8GB
+
+definiciones:
+  horizonte_meses: 12
+  # AJUSTAR tras notebooks/00_verificaciones.ipynb
+  hospitalizacion_sql: "(COALESCE(TRY_CAST(DIAS_HOSP AS DOUBLE), 0) > 0 OR SERVICIO_PRESTACIONAL ILIKE '%HOSPITALIZ%')"
+  fallecido_sql: "DESTINO_ASEGURADO ILIKE '%FALLEC%'"
+
+validacion:                       # cada corte -> resultado observado en los 12 meses siguientes
+  cortes_train: ["2022-12-31"]
+  cortes_valid: ["2023-12-31"]
+  cortes_test: ["2024-12-31"]
+
+negocio:                          # SUPUESTOS: documentar fuente en docs/supuestos_negocio.md
+  k_intervencion: 0.10
+  costo_hospitalizacion: 3000
+  costo_programa_por_paciente: 80
+  efectividad_intervencion: 0.20
+
+grupos_catalogo:
+  medicamentos:
+    insulina: 'insulina|glargina|detemir|lispro|aspart|glulisina|degludec'
+    metformina: 'metformina'
+    sulfonilurea: 'glibenclamida|gliclazida|glimepirida'
+    antihipertensivo: 'enalapril|captopril|losart|lisinopril|amlodipino|hidroclorotiazida'
+    estatina: 'atorvastatina|simvastatina|rosuvastatina|lovastatina'
+  procedimientos:
+    hba1c: 'hemoglobina glic|glicosilada|hba1c'
+    creatinina: 'creatinina'
+    lipidos: 'colesterol|triglic|perfil lip'
+    microalbuminuria: 'microalbumin|albuminuria'
+    fondo_ojo: 'fondo de ojo|oftalmoscop|retinograf'
+    glucosa: 'glucosa'
+  insumos:
+    tiras_glucometro: 'tira.*reactiv|glucomet|lanceta'
+    jeringa_insulina: 'jeringa.*insulin|aguja.*insulin'
+
+grupos_diagnostico:
+  hta: '^I1[0-5]'
+  erc: '^N1[7-9]'
+  cardio: '^(I2[0-5]|I50|I6[0-9])'
+  obesidad: '^E66'
+  dislipidemia: '^E78'
+  nefropatia: '^E1[0-4]2'
+  retinopatia: '^(E1[0-4]3|H36)'
+  neuropatia: '^E1[0-4]4'
+  circ_periferica: '^E1[0-4]5'
+  pie_ulcera: '^L97'
+  complic_cualquiera: '^E1[0-4][2-5]'
+  crisis_aguda: '^(E1[0-4][01]|E16[0-2])'
+  depresion: '^F3[23]'
+  itu: '^N39'
